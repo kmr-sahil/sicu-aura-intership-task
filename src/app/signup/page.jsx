@@ -8,6 +8,8 @@ function SignUpPage() {
 
   const router = useRouter();
 
+  const [image, setImage] = useState('')
+
   const [details, setDetails] = useState({
     hospitalName: "",
     email: "",
@@ -20,7 +22,6 @@ function SignUpPage() {
     contact: "",
     hospitalResgistrationNumber: "",
     emergencyWardNumber: "",
-    registrationCertificateImage: {},
     password: "",
   })
 
@@ -32,8 +33,24 @@ function SignUpPage() {
        formData.append("hospitalName", details.hospitalName);
        formData.append("email", details.email);
        formData.append("password", details.password);
+       formData.append("address", details.address);
+       formData.append("city", details.city);
+       formData.append("state", details.state);
+       formData.append("pincode", details.pincode);
+       formData.append("hospitalResgistrationDate", details.hospitalResgistrationDate);
+       formData.append("ambulance", details.ambulance);
+       formData.append("contact", details.contact);
+       formData.append("hospitalResgistrationNumber", details.hospitalResgistrationNumber);
+       formData.append("emergencyWardNumber", details.emergencyWardNumber);
 
-       formData.append("registrationCertificateImage", details.registrationCertificateImage);
+
+       formData.append("registrationCertificateImage", image);
+
+       console.log(formData)
+       // Display the key/value pairs
+       for (var pair of formData.entries()) {
+              console.log(pair[0]+ ', ' + pair[1]); 
+       }
 
        const response = await axios.post("/api/signup", formData, {
               headers: {
@@ -109,8 +126,8 @@ function SignUpPage() {
              <input className='w-[40%] border-2 border-gray-900 p-[0.5rem]' 
                    type="file" 
                    placeholder='Registration Cretificate'
-                   value={details.registrationCertificateImage}
-                   onChange={(e) => setDetails({...details, registrationCertificateImage: e.target.files[0]})}
+                   
+                   onChange={(e) => setImage(e.target.files[0])}
             />
             <input className='w-[40%] border-2 border-gray-900 p-[0.5rem]' 
                    type="text" 
